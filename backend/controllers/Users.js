@@ -1,6 +1,6 @@
 import Users from "../models/UserModel";
 import  bcrypt from "bcrypt";
-import jwt from  "jsonwebtoken";
+import  jwt from  "jsonwebtoken";
 
 export const getUsers = async(req,res)=>{
     try{
@@ -99,4 +99,4 @@ export const Logout = async(req,res)=>{
     return res.sendStatus(200);
 
 
-}
+};
