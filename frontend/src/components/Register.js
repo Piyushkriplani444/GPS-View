@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Register =()=>{
     const [name, setName] = useState('');
@@ -8,18 +8,18 @@ const Register =()=>{
     const [password , setPassword]= useState('');
     const [confPassword, setConfPassword] = useState('');
     const [msg,setMsg]=useState('');
-    const history = useHistory();
+    const history = useNavigate();
 
    const Register = async(e)=>{
     e.preventDefault();
     try {
-        await axios.post('http://loclhost:5000/users',{
+        await axios.post('http://localhost:5000/users',{
             name: name,
             email: email,
             password: password,
             confPassword: confPassword
                 });
-                history.push("/");
+                history("/");
 
     }catch(error){
         if(error.response){
