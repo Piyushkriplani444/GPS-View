@@ -72,6 +72,9 @@ const Register =()=>{
                           <div className="field mt-5">
                                 <button className="button is-success is-fullwidth">Register</button>
                             </div>
+                            <div className="field mt-5">
+                                    <button onClick={()=> { history("/")}} className="button is-success is-fullwidth">Login</button>
+                                </div>
                         </form>
                     </div>  
                 </div>
