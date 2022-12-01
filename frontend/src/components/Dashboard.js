@@ -2,7 +2,6 @@ import axios from "axios";
 import React,{ useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import jwt_decode from 'jwt-decode';
-import moment from "moment";
 import "bootstrap/dist/css/bootstrap.css";
 import DataPagination from "./DataPagination";
 import Navbar from "./Navbar";
@@ -27,9 +26,7 @@ const Dashboard = ()=>{
             const decoded = jwt_decode(response.data.accessToken);
             setName(decoded.name.toUpperCase());
             setExpire(decoded.exp);
-
-
-        }catch(error)
+                }catch(error)
         {
             if(error.response){
               history("/");
@@ -60,10 +57,11 @@ const Dashboard = ()=>{
             }
         });
         setDataSet(response.data);
+        
     }
-    const gpsdataset = dataset.filter(data => data.timeStamps= moment(data.timeStamps).format("YYYY-MM-DD hh:mm:ss "));
-    const filterdata= gpsdataset.filter(data =>  data.DeviceId.toLowerCase().includes(search.toLowerCase()) ||
-          data.DeviceType.toLowerCase().includes(search.toLowerCase())
+    
+    const filterdata= dataset.filter(data =>  data.DeviceId.toLowerCase().includes(search.toLowerCase()) ||
+          data['Device Type'].toLowerCase().includes(search.toLowerCase())
     );
     const numberofpage= ()=>{
         if(filterdata%5) 
@@ -99,20 +97,19 @@ const Dashboard = ()=>{
                     </tr>
                 </thead>
                 <tbody>
-                  
-                  <DataPagination pageSize={5} pageCount={numberofpage()} currentPage={0} data={filterdata}/>
-                
-                  {/* {filterdata.map((gdata,index) => (
-                        <tr key={index}>
-                          <td>{gdata.DeviceId}</td>
-                          <td>{gdata.DeviceType}</td>
-                          <td>{gdata.timeStamps}</td>
-                          <td>{gdata.location}</td>
-                        </tr>))} */}
-                 </tbody>
+                    <DataPagination pageSize={5} pageCount={numberofpage()} currentPage={0} data={filterdata}/>
+                </tbody>
 
              </table>
         </div>
      );
 }
 export default Dashboard;
+   
+                //   {/* {filterdata.map((gdata,index) => (
+                //         <tr key={index}>
+                //           <td>{gdata.DeviceId}</td>
+                //           <td>{gdata.DeviceType}</td>
+                //           <td>{gdata.timeStamps}</td>
+                //           <td>{gdata.location}</td>
+                //         </tr>))} */}

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
-
+import { useNavigate } from "react-router-dom";
 const DataPagination = (props)=>{
+     const history= useNavigate();
     const [currentPage , setCurrentPage] = useState(props.currentPage);
     const { pageSize  , pageCount , data} = props;
      const handleClick = (e,index)=>{
@@ -23,15 +24,24 @@ const DataPagination = (props)=>{
         currentPage * pageSize,
         (currentPage + 1) * pageSize
       );
+
+      const openDetailpage = (id,type)=>{
+          const detaildata= data.filter(d=>  d.DeviceId === id && d.DeviceType === type );
+          history("/detailpage",{
+            state: {
+              data :detaildata 
+            }
+          });
+      }
   return (
     <React.Fragment>
            {paginatedData.map((gdata,index) => (
                         <tr key={index}>
                           <td>{gdata.DeviceId}</td>
-                          <td>{gdata.DeviceType}</td>
-                          <td>{gdata.timeStamps}</td>
+                          <td>{gdata['Device Type']}</td>
+                          <td>{gdata.Timestamp}</td>
                           <td>{gdata.location}</td>
-                          <td><button>{'-->'}</button></td>
+                          <td><p type="button" onClick={()=>openDetailpage(gdata.DeviceId,gdata['Device Type'])}> ➡ </p></td>
                           </tr>
                 ))}
     <React.Fragment>

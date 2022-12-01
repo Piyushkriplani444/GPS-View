@@ -10,5 +10,5 @@ router.post('/users',Register);
 router.post('/login',Login);
 router.get('/token', refreshToken);
 router.delete('/logout', Logout);
-router.get('/gpsdata', gpsdata )
+router.get('/gpsdata',verifyToken, gpsdata);
 export default router;
