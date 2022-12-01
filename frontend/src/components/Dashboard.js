@@ -5,7 +5,7 @@ import jwt_decode from 'jwt-decode';
 import moment from "moment";
 import "bootstrap/dist/css/bootstrap.css";
 import DataPagination from "./DataPagination";
-
+import Navbar from "./Navbar";
 const Dashboard = ()=>{
     const [name,setName] =useState('');
     const [token,setToken] = useState('');
@@ -25,7 +25,7 @@ const Dashboard = ()=>{
             setToken(response.data.accessToken);
 
             const decoded = jwt_decode(response.data.accessToken);
-            setName(decoded.name);
+            setName(decoded.name.toUpperCase());
             setExpire(decoded.exp);
 
 
@@ -74,14 +74,21 @@ const Dashboard = ()=>{
     } 
     
      return (
-        <div className="container is-black mt-4">
-            <h1>Welcome Back : {name}</h1>
-            <h4>GPS Summary Page</h4>
-            <input 
-               className="input is-rounded field mt-5"
+         <div className="container is-black mt-4">
+                 <Navbar />
+         <div className="columns" style={{marginTop:50}}>
+             <div className="column">
+                 <h5 className="title is-5 is-centered">
+                     WELCOME BACK : {name}</h5>
+              </div>
+              <div className="column">
+                     <input 
+               className="input is-rounded"
                type="text" 
                onChange={(e) => setSearch(e.target.value)}
                placeholder="Search for Device Id/type" />
+              </div>
+          </div>
              <table className="table is-striped is-fullwidth">
                 <thead>
                     <tr>

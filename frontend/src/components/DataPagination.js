@@ -31,6 +31,7 @@ const DataPagination = (props)=>{
                           <td>{gdata.DeviceType}</td>
                           <td>{gdata.timeStamps}</td>
                           <td>{gdata.location}</td>
+                          <td><button>{'-->'}</button></td>
                           </tr>
                 ))}
     <React.Fragment>
