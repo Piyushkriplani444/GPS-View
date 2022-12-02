@@ -106,10 +106,10 @@ const Dashboard = ()=>{
 }
 export default Dashboard;
    
-                //   {/* {filterdata.map((gdata,index) => (
+                //   { {filterdata.map((gdata,index) => (
                 //         <tr key={index}>
                 //           <td>{gdata.DeviceId}</td>
                 //           <td>{gdata.DeviceType}</td>
                 //           <td>{gdata.timeStamps}</td>
                 //           <td>{gdata.location}</td>
-                //         </tr>))} */}
+                //         </tr>))} }

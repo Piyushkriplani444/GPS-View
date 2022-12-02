@@ -26,7 +26,7 @@ const DataPagination = (props)=>{
       );
 
       const openDetailpage = (id,type)=>{
-          const detaildata= data.filter(d=>  d.DeviceId === id && d.DeviceType === type );
+          const detaildata= data.filter(d=>  d.DeviceId === id && d['Device Type'] === type );
           history("/detailpage",{
             state: {
               data :detaildata 
