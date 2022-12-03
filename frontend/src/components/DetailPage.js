@@ -18,7 +18,7 @@ const DetailPage = ()=>{
 
 
     return (
-       <div className='container mt-4'>
+       <div className='container has-background-grey-light mt-4'>
              <Navbar />
              <div  style={{margin:20}}>
                  <h2 className='title is-2'>{deviceId}</h2>

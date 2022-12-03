@@ -11,20 +11,20 @@ const Dashboard = ()=>{
     const [expire,setExpire] = useState('');
     const [dataset, setDataSet] = useState([]);
     const [search,setSearch] = useState('');
+    const [sortType,setSortType] = useState("Def");
+    const [sortTypeB,setSortTypeB] = useState("Def");
     const history = useNavigate();
-    
      useEffect(()=>{
         refreshToken();
         getdata();
-     });
-
+      });
      const refreshToken = async()=>{
         try{ 
             const response = await axios.get('http://localhost:5000/token');
             setToken(response.data.accessToken);
 
             const decoded = jwt_decode(response.data.accessToken);
-            setName(decoded.name.toUpperCase());
+            setName(decoded.name);
             setExpire(decoded.exp);
                 }catch(error)
         {
@@ -59,10 +59,27 @@ const Dashboard = ()=>{
         setDataSet(response.data);
         
     }
-    
-    const filterdata= dataset.filter(data =>  data.DeviceId.toLowerCase().includes(search.toLowerCase()) ||
+    const useThisData = dataset;
+    const filterdata= useThisData.filter(data =>  data.DeviceId.toLowerCase().includes(search.toLowerCase()) ||
           data['Device Type'].toLowerCase().includes(search.toLowerCase())
     );
+    if(sortType=== "Desc")
+         {
+            filterdata.sort((a,b)=>(a['Device Type']>b['Device Type']?-1:1));
+         }
+     if(sortType === "Asc")
+     {
+        filterdata.sort((a,b)=>(a['Device Type']<b['Device Type']?-1:1));
+     }
+     if(sortTypeB === "Desc")
+     {
+        filterdata.sort((a,b)=>(a['DeviceId']>b['DeviceId']?-1:1));
+     }
+     if(sortTypeB === "Asc")
+      {
+        filterdata.sort((a,b)=>(a['DeviceId']<b['DeviceId']?-1:1));
+     }
+
     const numberofpage= ()=>{
         if(filterdata%5) 
             return (filterdata.length/5)+1; 
@@ -70,14 +87,16 @@ const Dashboard = ()=>{
          return (filterdata.length/5); 
 
     } 
+
+
     
      return (
-         <div className="container is-black mt-4">
+         <div className="container has-background-grey-light mt-4">
                  <Navbar />
          <div className="columns" style={{marginTop:50}}>
              <div className="column">
                  <h5 className="title is-5 is-centered">
-                     WELCOME BACK : {name}</h5>
+                     WELCOME BACK : {name.toUpperCase()}</h5>
               </div>
               <div className="column">
                      <input 
@@ -87,13 +106,14 @@ const Dashboard = ()=>{
                placeholder="Search for Device Id/type" />
               </div>
           </div>
-             <table className="table is-striped is-fullwidth">
+             <table className="table has-background-primary-light  is-bordered is-narrow is-fullwidth">
                 <thead>
                     <tr>
-                        <th>DeviceID </th>
-                        <th>Device Type</th>
+                        <th>DeviceID  <p type="button" style={{fontSize : 10}} onClick={()=> {setSortType("Def"); setSortTypeB(sortTypeB==="Def"?"Asc":(sortTypeB==="Asc")?"Desc":"Asc")} } >{sortTypeB}</p> </th>
+                        <th>Device Type <p type="button" style={{fontSize : 10}} onClick={()=>{setSortTypeB("Def"); setSortType(sortType==="Def"?"Asc":(sortType==="Asc")?"Desc":"Asc") }} >{sortType}</p> </th>
                         <th>Latest TimeStamp</th>
                         <th>Latest Location</th>
+                        <th>Detail Page</th>
                     </tr>
                 </thead>
                 <tbody>

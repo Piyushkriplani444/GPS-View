@@ -45,6 +45,7 @@ const DataPagination = (props)=>{
                           </tr>
                 ))}
     <React.Fragment>
+    <hr />
       <Pagination aria-label="Page navigation example">
         <PaginationItem>
           <PaginationLink

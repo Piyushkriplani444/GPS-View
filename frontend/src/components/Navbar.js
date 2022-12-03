@@ -14,12 +14,12 @@ const Navbar= ()=>{
         }
      }
      return (
-        <nav className="navbar is-light" role="navigation" aria-label="main navigation">
+        <nav className="navbar mt-4 is-light" role="navigation" aria-label="main navigation">
             <div className="container">
             <div id="navbarBasicExample" className="navbar-menu">
                 <div className="navbar-start">
                     <a href="/dashboard" className="navbar-item">
-                        Welcome to GPS Dashboard
+                        Welcome to GPS Dashboard View
                         </a>
                 </div>
 
