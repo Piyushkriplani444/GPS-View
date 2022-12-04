@@ -15,7 +15,22 @@ export const getUsers = async(req,res)=>{
 
 export const  Register = async(req,res) => {
     const  { name,email, password , confPassword } = req.body;
-    if(password != confPassword) return res.status(400).json({msh: "Password and Confirm Password do not match "});
+  
+
+    if(!name )return res.status(400).json({msg: "Name cannot be empty"});
+    if(!email )return res.status(400).json({msg: "Email cannot be empty"});
+    const userEmail = await Users.findAll({
+        attributes:['email']
+    });
+    
+    const match = userEmail.filter(user => user.email === email);
+    if(match.length) res.status(400).json({msg: "Already Registered user"});
+
+    if(!password )return res.status(400).json({msg: "Password cannot be empty"});
+    if(!confPassword )return res.status(400).json({msg: "Confirm Password cannot be empty"});
+    if(password != confPassword) return res.status(400).json({msg: "Password and Confirm Password do not match "});
+   
+    
     const salt=await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(password,salt);
 
@@ -34,6 +49,9 @@ export const  Register = async(req,res) => {
 };
 
 export const Login = async(req,res) =>{
+      const { email , password } = req.body;
+      if(!email)return res.status(400).json({msg: "Email cannot be Empty"});
+      if(!password)return  res.status(400).json({msg: "Password cannot be Empty"});
        try{
         const user = await Users.findAll({
             where:{
