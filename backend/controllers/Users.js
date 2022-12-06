@@ -1,6 +1,7 @@
 import Users from "../models/UserModel.js";
 import  bcrypt from "bcrypt";
 import  jwt from  "jsonwebtoken";
+import emailValidator from "email-validator";
 
 export const getUsers = async(req,res)=>{
     try{
@@ -15,15 +16,20 @@ export const getUsers = async(req,res)=>{
 
 export const  Register = async(req,res) => {
     const  { name,email, password , confPassword } = req.body;
-  
-
+ 
     if(!name )return res.status(400).json({msg: "Name cannot be empty"});
     if(!email )return res.status(400).json({msg: "Email cannot be empty"});
+    
+    if(!emailValidator.validate(email)){
+        return res.status(400).json({msg: "Invalid Email format"});
+  }
+    
     const userEmail = await Users.findAll({
         attributes:['email']
     });
     
     const match = userEmail.filter(user => user.email === email);
+    
     if(match.length) res.status(400).json({msg: "Already Registered user"});
 
     if(!password )return res.status(400).json({msg: "Password cannot be empty"});
@@ -37,7 +43,7 @@ export const  Register = async(req,res) => {
     try {
         await Users.create({
             name: name,
-            email: email,
+            email: email.toLowerCase(),
             password : hashPassword
         });
         res.json({msg: "Registration Successful"});
@@ -55,7 +61,7 @@ export const Login = async(req,res) =>{
        try{
         const user = await Users.findAll({
             where:{
-                email:req.body.email
+                email:req.body.email.toLowerCase()
             }
         });
         if(!user.length)return res.status(400).json({msg: "Email does not exist"});
