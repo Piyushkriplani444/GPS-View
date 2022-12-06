@@ -54,17 +54,26 @@ REFRESH_TOKEN_SECRET = 825y8i3hnfjmsbv7gwajbl7fobqrjfvbs7gbfj2q3bgh8f42
 Go to mysql workbench and import  _*gpslocation.csv file in gpsdashboad database*_
 
 
+## Start Backend
 ### After database in created run following command to run backend
 ```
+cd backend
 nodemon index.js
-
 ```
 
+### Api Documentation 
+
+After succussfully running the backend you can see the api documentation at following URL
+
+```
+http://localhost:5000/doc/
+```
+## Start Frontend 
 ### If backend is running without error then go to frontend and run following command to run frontend
 
 ```
+cd frontend
 npm start
-
 ```
 
 
